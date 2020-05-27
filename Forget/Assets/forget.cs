@@ -262,11 +262,6 @@ public class forget : MonoBehaviour {
 
 	}
 	IEnumerator ColorCycleer(){
-		for(int i=0;i<10;i++){
-		BCStore[i]=BCTrack[i];
-		FinalOrder[i]=BNames[BCStore[i]];
-		}
-		ButtonReorder();
 		while(true){
 			if(intro)
 			yield return new WaitForSeconds(.03f);
@@ -317,6 +312,11 @@ public class forget : MonoBehaviour {
 		Numbers[1].text = "";
 		BCTrack = Enumerable.Range(0,10).ToList().Shuffle().ToArray();
 		intro = false;
+		for(int i=0;i<10;i++){
+		BCStore[i]=BCTrack[i];
+		FinalOrder[i]=BNames[BCStore[i]];
+		}
+		ButtonReorder();
 		}
 		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The number in Base 36 is {1}.", _moduleId, Numbers[0].text);
 		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The rotations are {1}, {2}, and {3}.", _moduleId, Rotations[StageStorage[0]],Rotations[StageStorage[1]],Rotations[StageStorage[2]]);
