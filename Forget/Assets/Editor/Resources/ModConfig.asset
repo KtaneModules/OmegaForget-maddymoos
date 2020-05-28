@@ -11,13 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: directionalButton
-  title: Directional Button
+  id: omegaForget
+  title: OmegaForget
   author: Cooldoom5
-  description: 'This is the one time a Roblox knockoff is good.
+  description: 'oh no.
+
+    This Module is Twitch Plays supported.
 
 
-    Module ID: directionalButton'
-  version: 1.1
+    Manual - https://ktane.timwi.de/HTML/OmegaForget.html'
+  version: 1
   outputFolder: E:\Setam\steamapps\common\Keep Talking And Noboty Explodes\mods
-  previewImage: {fileID: 2800000, guid: 9aab404b008a5fd488751e30a7da4b0a, type: 3}
+  previewImage: {fileID: 2800000, guid: afebac01c3d14fb4287255869868fa4f, type: 3}
