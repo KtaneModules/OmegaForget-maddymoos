@@ -27,6 +27,7 @@ public class forget : MonoBehaviour {
     private string[] AStorage;
     private int SubSegment;
     private int Inputnum;
+    private int ASTracker;
     public Light[] Lightarray;
     public Color[] Colors;
 	private int[] TempGarbage = new int[100];
@@ -72,6 +73,7 @@ public class forget : MonoBehaviour {
 	private bool solved;
 	private bool intro;
 	private bool submission = false;
+	private bool Checking = false;
 	private string[] IgnoreList = {"<PLACEHOLDER>","14"," Bamboozling Time Keeper"," Brainf---"," Forget Enigma"," Forget Everything"," Forget It Not"," Forget Me Not"," Forget Me Later"," Forget Perspective"," Forget The Colors"," Forget Them All"," Forget This"," Forget Us Not"," Iconic"," Organization"," Purgatory"," RPS Judging"," Simon Forgets"," Simon's Stages"," Souvenir"," Tallordered Keys"," The Time Keeper"," The Troll"," The Twin"," The Very Annoying Button"," Timing Is Everything"," Turn The Key"," Ultimate Custom Night","Übermodule"};
 	private string Base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private string Base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ``````````````````````````0123456789+-";
@@ -101,6 +103,7 @@ public class forget : MonoBehaviour {
 		if (!Application.isEditor)
             maxStage = Bomb.GetSolvableModuleNames().Where(a => !_ignore.Contains(a)).Count();
 		if (Application.isEditor)
+			//I WOULD LIKE TO MODIFY THE STAGE COUNT IN THE TESTHARNESS
 			maxStage = 10;
 		PStorage = new string[maxStage];
 		AStorage = new string[maxStage];
@@ -111,23 +114,38 @@ public class forget : MonoBehaviour {
 		int aly = Array.IndexOf(Buttons,btn);
 		Buttons[aly].AddInteractionPunch();
 
-		if(solved)
+		if(solved||Checking){
 			return;
+		}
 		if(!submission){
             Module.HandleStrike();
 			return;
 		}
 		AStorage[SubSegment*10+Inputnum] = BNames[BCTrack[aly]]+aly.ToString();
 		Inputnum++;
-		if(Inputnum == 10){
-			//UNFINISHED DO NOT TOUCH
+		if(SubSegment*10+Inputnum == maxStage){
+			Checking=true;
+			StartCoroutine(FinalCheck());
 		}
-	}
+		else if(Inputnum == 10){
+			Checking=true;
+			StartCoroutine(Check());
+			Inputnum=0;
+		}
+		}
 	// Update is called once per frame
 	void SubmissionMode() {
 		for(int i=0;i<12;i++)
 			StageStorage[i]=0;
 		submission = true;
+		Numbers[0].text = "~~";
+		Numbers[1].text = "INPT";
+		ColorChanger[0].material = Lights[1];
+		ColorChanger[1].material = Lights[1];
+		Lightarray[0].color = Colors[1];
+		Lightarray[1].color = Colors[1];
+		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The full answer is {1}.", _moduleId, PStorage.Join(", "));
+
 	}
 	
 	void PleaseDoRNGThings(){
@@ -307,6 +325,7 @@ public class forget : MonoBehaviour {
 			yield return new WaitForSeconds(.03f);
 			else
 			yield return new WaitForSeconds(.5f);
+			if(!Checking){
 			//todo this is dumb
 			TempGarbage[0]=BCTrack[9];
 			TempGarbage[1]=BCTrack[0];
@@ -324,6 +343,117 @@ public class forget : MonoBehaviour {
 			BCChanger[i].material = BColours[BCTrack[i]];
 		}
 		}
+		}
+	}
+	IEnumerator SolveAnimation(){
+			Audio.PlaySoundAtTransform("Module_Solved", Numbers[0].transform);
+		yield return new WaitForSeconds(19f);
+		float tom=0;while(tom<=.5f){
+					Orbs[1].localPosition = Vector3.Lerp(Orbs[1].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					Orbs[2].localPosition = Vector3.Lerp(Orbs[2].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					Orbs[3].localPosition = Vector3.Lerp(Orbs[3].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					Orbs[4].localPosition = Vector3.Lerp(Orbs[4].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					Orbs[5].localPosition = Vector3.Lerp(Orbs[5].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					Orbs[6].localPosition = Vector3.Lerp(Orbs[6].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					Orbs[7].localPosition = Vector3.Lerp(Orbs[7].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					Orbs[8].localPosition = Vector3.Lerp(Orbs[8].localPosition,new Vector3(0f,0f,0f), tom * tom * (3.0f - 2.0f * tom));
+					yield return new WaitForSeconds(.02f);tom+=.1f;}
+					ColorChanger[0].material = Lights[4];
+			ColorChanger[1].material = Lights[4];
+			Lightarray[0].color = Colors[4];
+			Lightarray[1].color = Colors[4];
+			Numbers[0].text="GG";
+			Numbers[1].text="hype";
+			for(int i=0;i<10;i++){
+			BCChanger[i].material = BColours[3]; 
+			}
+			Module.HandlePass();
+	}
+	IEnumerator FinalCheck(){
+		Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1,4), Numbers[0].transform);
+		bool[] aaaaa = {false,false,false,false,false,false,false,false,false,false};
+		bool E = true;
+		for(int i=0;i<10;i++)
+			BCChanger[i].material = BColours[0]; 
+		for(int i=0;i<Inputnum;i++){
+			if (PStorage[SubSegment*10+i] != AStorage[SubSegment*10+i])
+				aaaaa[i] = false;
+			else aaaaa[i] = true;
+			BCChanger[i].material = BColours[3]; 
+		}
+		yield return new WaitForSeconds(.5f);
+		for(int i=0;i<Inputnum;i++){
+			if (!aaaaa[i]){
+				E = false;
+				yield return new WaitForSeconds(.25f);
+			Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+			BCChanger[i].material = BColours[7]; 
+			}
+		}
+		yield return new WaitForSeconds(.25f);
+		if(E){
+			StartCoroutine(SolveAnimation());
+		}
+		else{
+			Audio.PlaySoundAtTransform("Wrong_Answer_End", Numbers[0].transform);
+			ColorChanger[0].material = Lights[9];
+			ColorChanger[1].material = Lights[9];
+			Lightarray[0].color = Colors[9];
+			Lightarray[1].color = Colors[9];
+			Module.HandleStrike();
+			yield return new WaitForSeconds(1f);
+		ColorChanger[0].material = Lights[1];
+		ColorChanger[1].material = Lights[1];
+		Lightarray[0].color = Colors[1];
+		Lightarray[1].color = Colors[1];
+		Checking = false;
+		Inputnum = 0;
+		}
+		yield break;
+	}
+	IEnumerator Check(){
+		Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1,4), Numbers[0].transform);
+		bool[] aaaaa = {false,false,false,false,false,false,false,false,false,false};
+		bool E = true;
+		for(int i=0;i<10;i++){
+			if (PStorage[SubSegment*10+i] != AStorage[SubSegment*10+i])
+				aaaaa[i] = false;
+			else aaaaa[i] = true;
+			BCChanger[i].material = BColours[3]; 
+		}
+		yield return new WaitForSeconds(.5f);
+		for(int i=0;i<10;i++){
+			if (!aaaaa[i]){
+				E = false;
+				yield return new WaitForSeconds(.25f);
+			Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+			BCChanger[i].material = BColours[7]; 
+			}
+		}
+		yield return new WaitForSeconds(.25f);
+		if(E){
+			Audio.PlaySoundAtTransform("Ten_Stages_Passed", Numbers[0].transform);
+			SubSegment++;
+			ColorChanger[0].material = Lights[4];
+			ColorChanger[1].material = Lights[4];
+			Lightarray[0].color = Colors[4];
+			Lightarray[1].color = Colors[4];
+		}
+		else{
+			Audio.PlaySoundAtTransform("Wrong_Answer_End", Numbers[0].transform);
+			ColorChanger[0].material = Lights[9];
+			ColorChanger[1].material = Lights[9];
+			Lightarray[0].color = Colors[9];
+			Lightarray[1].color = Colors[9];
+			Module.HandleStrike();
+		}
+		yield return new WaitForSeconds(1f);
+		ColorChanger[0].material = Lights[1];
+		ColorChanger[1].material = Lights[1];
+		Lightarray[0].color = Colors[1];
+		Lightarray[1].color = Colors[1];
+		Checking = false;
+		yield break;
 	}
 	IEnumerator Godospin(){
 		Debug.LogFormat("[<PLACEHOLDER> #{0}]: -----STAGE {1}-----",_moduleId,Stage);
@@ -488,5 +618,47 @@ public class forget : MonoBehaviour {
             //once it reaches here, we know it's modulated and we can return it
             return num;
         }
+    }
+	#pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} press X# (Waits for the color X to be in the #th position, then presses it) ||Commands can be chained using X# X#...||";
+	#pragma warning restore 414
+	 IEnumerator ProcessTwitchCommand(string command)
+    {
+	     Match m;
+        if ((m = Regex.Match(command, @"^\s*press\s+(?:(.)(\d)\s*)+$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
+        {
+            yield return null;  // acknowledge to TP that the command was valid
+
+            for (var i = 0; i < m.Groups[1].Captures.Count; i++)
+            {
+                var letter = m.Groups[1].Captures[i].Value;
+                var number = m.Groups[2].Captures[i].Value[0] - '0';
+
+                while (Checking)
+                    yield return "trycancel";
+                while (Array.IndexOf(BCTrack, Array.IndexOf(BNames, letter)) != number)
+                    yield return "trycancel";
+                Buttons[number].OnInteract();
+                yield return new WaitForSeconds(.1f);
+            }
+        }
+        else
+            yield return "sendtochaterror Incorrect Syntax. Use '!{1} press X#'.";
+	}
+	IEnumerator TwitchHandleForcedSolve()
+    {
+		while (!submission) //Wait until submission time
+            yield return true;
+		string[] m = PStorage;
+		for(int i=0;i<PStorage.Length;i++){
+		string letter = m[i][0].ToString();
+        string number = m[i][1].ToString();
+		while (Checking)
+			yield return new WaitForSeconds(.1f);
+        while ((Array.IndexOf(BCTrack, Array.IndexOf(BNames, letter))).ToString() != number)
+			yield return new WaitForSeconds(.1f);
+		Buttons[int.Parse(number)].OnInteract();
+		ASTracker++;
+		}
     }
 }
