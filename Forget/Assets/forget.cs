@@ -105,10 +105,15 @@ public class forget : MonoBehaviour {
 		if (Application.isEditor)
 			//I WOULD LIKE TO MODIFY THE STAGE COUNT IN THE TESTHARNESS
 			maxStage = 10;
+		if(maxStage == 0){
+			Module.HandlePass();
+		}
+		else{
 		PStorage = new string[maxStage];
 		AStorage = new string[maxStage];
         Debug.LogFormat("[<PLACEHOLDER> #{0}]: On this bomb we will go through {1} stages.", _moduleId, maxStage+1);
 		PleaseDoRNGThings();
+		}
 	}
 	void HandlePress(KMSelectable btn){
 		int aly = Array.IndexOf(Buttons,btn);
