@@ -24,6 +24,9 @@ public class forget : MonoBehaviour {
     private string[] FinalOrder = new string[12];
     private string[] BNames = {"K","B","C","G","M","O","P","R","W","Y"};
     private string[] PStorage;
+    private string[] AStorage;
+    private int SubSegment;
+    private int Inputnum;
     public Light[] Lightarray;
     public Color[] Colors;
 	private int[] TempGarbage = new int[100];
@@ -83,7 +86,15 @@ public class forget : MonoBehaviour {
 	    string[] ignoredModules = Boss.GetIgnoredModules(Module, _ignore);
 		if (ignoredModules != null)
             _ignore = ignoredModules;
-
+		for (byte i = 0; i < Buttons.Length; i++)
+        {
+            KMSelectable btn = Buttons[i];
+            btn.OnInteract += delegate
+            {
+                HandlePress(btn);
+                return false;
+            };
+        }
 	}
 	// Use this for initialization
 	void Start () {
@@ -92,10 +103,26 @@ public class forget : MonoBehaviour {
 		if (Application.isEditor)
 			maxStage = 10;
 		PStorage = new string[maxStage];
+		AStorage = new string[maxStage];
         Debug.LogFormat("[<PLACEHOLDER> #{0}]: On this bomb we will go through {1} stages.", _moduleId, maxStage+1);
 		PleaseDoRNGThings();
 	}
-	
+	void HandlePress(KMSelectable btn){
+		int aly = Array.IndexOf(Buttons,btn);
+		Buttons[aly].AddInteractionPunch();
+
+		if(solved)
+			return;
+		if(!submission){
+            Module.HandleStrike();
+			return;
+		}
+		AStorage[SubSegment*10+Inputnum] = BNames[BCTrack[aly]]+aly.ToString();
+		Inputnum++;
+		if(Inputnum == 10){
+			//UNFINISHED DO NOT TOUCH
+		}
+	}
 	// Update is called once per frame
 	void SubmissionMode() {
 		for(int i=0;i<12;i++)
@@ -234,7 +261,7 @@ public class forget : MonoBehaviour {
 			Temp = Temp.Select(x => x.Replace("-", "M")).ToArray();
 			Debug.Log("3 Applied.");
 		}
-		if(FinalOrder[(Array.IndexOf(FinalOrder,"B")+5)%10]==""){
+		if(FinalOrder[(Array.IndexOf(FinalOrder,"B")+5)%10]=="Y"){
 			Temp = Temp.Select(x => x.Replace("B", "-")).ToArray();
 			Temp = Temp.Select(x => x.Replace("Y", "B")).ToArray();
 			Temp = Temp.Select(x => x.Replace("-", "Y")).ToArray();
@@ -246,7 +273,7 @@ public class forget : MonoBehaviour {
 			Temp = Temp.Select(x => x.Replace("-", FinalOrder[9])).ToArray();
 			Debug.Log("5 Applied.");
 		}
-		if(FinalOrder[(Array.IndexOf(FinalOrder,"R")+1)%10]=="B"||FinalOrder[(Array.IndexOf(FinalOrder,"R")+7)%10]=="B"){
+		if(FinalOrder[(Array.IndexOf(FinalOrder,"R")+1)%10]=="B"||FinalOrder[(Array.IndexOf(FinalOrder,"R")+9)%10]=="B"){
 			string[] shifter = new string[12];
 		for(int i=0;i<10;i++)
 			shifter[i+2]=Temp[i];
