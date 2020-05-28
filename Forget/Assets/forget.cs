@@ -107,6 +107,10 @@ public class forget : MonoBehaviour {
 			maxStage = 10;
 		if(maxStage == 0){
 			Module.HandlePass();
+			ColorChanger[0].material = Lights[4];
+			ColorChanger[1].material = Lights[4];
+			Lightarray[0].color = Colors[4];
+			Lightarray[1].color = Colors[4];
 		}
 		else{
 		PStorage = new string[maxStage];
