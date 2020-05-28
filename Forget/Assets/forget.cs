@@ -74,7 +74,7 @@ public class forget : MonoBehaviour {
 	private bool intro;
 	private bool submission = false;
 	private bool Checking = false;
-	private string[] IgnoreList = {"<PLACEHOLDER>","14"," Bamboozling Time Keeper"," Brainf---"," Forget Enigma"," Forget Everything"," Forget It Not"," Forget Me Not"," Forget Me Later"," Forget Perspective"," Forget The Colors"," Forget Them All"," Forget This"," Forget Us Not"," Iconic"," Organization"," Purgatory"," RPS Judging"," Simon Forgets"," Simon's Stages"," Souvenir"," Tallordered Keys"," The Time Keeper"," The Troll"," The Twin"," The Very Annoying Button"," Timing Is Everything"," Turn The Key"," Ultimate Custom Night","Übermodule"};
+	private string[] IgnoreList = {"OmegaForget","14"," Bamboozling Time Keeper"," Brainf---"," Forget Enigma"," Forget Everything"," Forget It Not"," Forget Me Not"," Forget Me Later"," Forget Perspective"," Forget The Colors"," Forget Them All"," Forget This"," Forget Us Not"," Iconic"," Organization"," Purgatory"," RPS Judging"," Simon Forgets"," Simon's Stages"," Souvenir"," Tallordered Keys"," The Time Keeper"," The Troll"," The Twin"," The Very Annoying Button"," Timing Is Everything"," Turn The Key"," Ultimate Custom Night","Übermodule"};
 	private string Base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private string Base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ``````````````````````````0123456789+-";
 	private string[] _ignore;
@@ -102,8 +102,8 @@ public class forget : MonoBehaviour {
 	void Start () {
 		if (!Application.isEditor)
             maxStage = Bomb.GetSolvableModuleNames().Where(a => !_ignore.Contains(a)).Count();
-		if (Application.isEditor)
-			//I WOULD LIKE TO MODIFY THE STAGE COUNT IN THE TESTHARNESS
+		else
+	 //I WOULD LIKE TO MODIFY THE STAGE COUNT IN THE TESTHARNESS
 			maxStage = 10;
 		if(maxStage == 0){
 			Module.HandlePass();
@@ -115,7 +115,7 @@ public class forget : MonoBehaviour {
 		else{
 		PStorage = new string[maxStage];
 		AStorage = new string[maxStage];
-        Debug.LogFormat("[<PLACEHOLDER> #{0}]: On this bomb we will go through {1} stages.", _moduleId, maxStage+1);
+        Debug.LogFormat("[OmegaForget #{0}]: On this bomb we will go through {1} stages.", _moduleId, maxStage+1);
 		PleaseDoRNGThings();
 		}
 	}
@@ -153,7 +153,7 @@ public class forget : MonoBehaviour {
 		ColorChanger[1].material = Lights[1];
 		Lightarray[0].color = Colors[1];
 		Lightarray[1].color = Colors[1];
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The full answer is {1}.", _moduleId, PStorage.Join(", "));
+		Debug.LogFormat("[OmegaForget #{0}]: The full answer is {1}.", _moduleId, PStorage.Join(", "));
 
 	}
 	
@@ -181,8 +181,8 @@ public class forget : MonoBehaviour {
 		StageStorage[6] = StageStorage[6] % 1000;
 		StageStorage[9] = StageStorage[9] % 1000;
 		StageStorage[7] = LEDTable[StageStorage[5]][StageStorage[4]];
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: After converting to Base 8 and moduloing by 1000, the new number is {1}.", _moduleId, StageStorage[6]);
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The combined LED value is {1}.", _moduleId, StageStorage[7]);
+		Debug.LogFormat("[OmegaForget #{0}]: After converting to Base 8 and moduloing by 1000, the new number is {1}.", _moduleId, StageStorage[6]);
+		Debug.LogFormat("[OmegaForget #{0}]: The combined LED value is {1}.", _moduleId, StageStorage[7]);
 		switch (Stage%5){
 			case 0:StageStorage[8] = StageStorage[6] - StageStorage[7]; break;
 			case 1:StageStorage[8] = 2*StageStorage[7] + 7; break;
@@ -191,10 +191,10 @@ public class forget : MonoBehaviour {
 			case 4:StageStorage[8] = 75-StageStorage[7]+2*(StageStorage[6]-StageStorage[7]); break;
 		}
 		StageStorage[8] = Mod(StageStorage[8], 100);
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The E value is {1}.", _moduleId, StageStorage[8]);
+		Debug.LogFormat("[OmegaForget #{0}]: The E value is {1}.", _moduleId, StageStorage[8]);
 		X = StageStorage[6];
 		int D = StageStorage[9];
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The D value is {1}.", _moduleId, D);
+		Debug.LogFormat("[OmegaForget #{0}]: The D value is {1}.", _moduleId, D);
 		int I = StageStorage[6];
 		int E = StageStorage[8];
 		for(int n=1;n<4;n++){
@@ -258,14 +258,14 @@ public class forget : MonoBehaviour {
 				X=Mod(X,1000);
 				N[n-1] = X;
 			}
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: X is now {1}.", _moduleId, X);
+		Debug.LogFormat("[OmegaForget #{0}]: X is now {1}.", _moduleId, X);
 		}
 		StageStorage[10] = Mod(X,100);
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The number being used for the button is {1}.", _moduleId, StageStorage[10]);
+		Debug.LogFormat("[OmegaForget #{0}]: The number being used for the button is {1}.", _moduleId, StageStorage[10]);
 		StageStorage[11] = ButtonTable[StageStorage[10]%10][StageStorage[10]/10];
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The value from the table is {1}.", _moduleId, StageStorage[11]);
+		Debug.LogFormat("[OmegaForget #{0}]: The value from the table is {1}.", _moduleId, StageStorage[11]);
 		PStorage[Stage] = FinalOrder[StageStorage[11]/10] + StageStorage[11]%10;
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The correct input for stage {1} is {2}.", _moduleId, Stage,PStorage[Stage]);
+		Debug.LogFormat("[OmegaForget #{0}]: The correct input for stage {1} is {2}.", _moduleId, Stage,PStorage[Stage]);
 
 	}
 	void ButtonReorder(){
@@ -465,7 +465,7 @@ public class forget : MonoBehaviour {
 		yield break;
 	}
 	IEnumerator Godospin(){
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: -----STAGE {1}-----",_moduleId,Stage);
+		Debug.LogFormat("[OmegaForget #{0}]: -----STAGE {1}-----",_moduleId,Stage);
 		if(Stage == 0){
 				Audio.PlaySoundAtTransform("Startup", Buttons[2].transform);
 				intro = true;
@@ -497,10 +497,10 @@ public class forget : MonoBehaviour {
 		}
 		ButtonReorder();
 		}
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The number in Base 36 is {1}.", _moduleId, Numbers[0].text);
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The rotations are {1}, {2}, and {3}.", _moduleId, Rotations[StageStorage[0]],Rotations[StageStorage[1]],Rotations[StageStorage[2]]);
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: The LED colors are {1} and {2}.", _moduleId,CNames[StageStorage[4]],CNames[StageStorage[5]]);
-		Debug.LogFormat("[<PLACEHOLDER> #{0}]: In Base 10, the number displayed is {1}.", _moduleId,StageStorage[3]);
+		Debug.LogFormat("[OmegaForget #{0}]: The number in Base 36 is {1}.", _moduleId, Numbers[0].text);
+		Debug.LogFormat("[OmegaForget #{0}]: The rotations are {1}, {2}, and {3}.", _moduleId, Rotations[StageStorage[0]],Rotations[StageStorage[1]],Rotations[StageStorage[2]]);
+		Debug.LogFormat("[OmegaForget #{0}]: The LED colors are {1} and {2}.", _moduleId,CNames[StageStorage[4]],CNames[StageStorage[5]]);
+		Debug.LogFormat("[OmegaForget #{0}]: In Base 10, the number displayed is {1}.", _moduleId,StageStorage[3]);
 		StageMath();
 		while(true){
 			Numbers[1].text = Stage.ToString();
