@@ -21,7 +21,7 @@ public class forget : MonoBehaviour {
 	public Renderer[] BCChanger;
     private int[] BCTrack = {0,1,2,3,4,5,6,7,8,9};
     private int[] BCStore = new int[10];
-    private string[] FinalOrder = new string[10];
+    private string[] FinalOrder = new string[12];
     private string[] BNames = {"K","B","C","G","M","O","P","R","W","Y"};
     private string[] PStorage;
     public Light[] Lightarray;
@@ -68,6 +68,7 @@ public class forget : MonoBehaviour {
 	private int maxStage;
 	private bool solved;
 	private bool intro;
+	private bool submission = false;
 	private string[] IgnoreList = {"<PLACEHOLDER>","14"," Bamboozling Time Keeper"," Brainf---"," Forget Enigma"," Forget Everything"," Forget It Not"," Forget Me Not"," Forget Me Later"," Forget Perspective"," Forget The Colors"," Forget Them All"," Forget This"," Forget Us Not"," Iconic"," Organization"," Purgatory"," RPS Judging"," Simon Forgets"," Simon's Stages"," Souvenir"," Tallordered Keys"," The Time Keeper"," The Troll"," The Twin"," The Very Annoying Button"," Timing Is Everything"," Turn The Key"," Ultimate Custom Night","Übermodule"};
 	private string Base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private string Base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ``````````````````````````0123456789+-";
@@ -88,13 +89,18 @@ public class forget : MonoBehaviour {
 	void Start () {
 		if (!Application.isEditor)
             maxStage = Bomb.GetSolvableModuleNames().Where(a => !_ignore.Contains(a)).Count();
-		PStorage = new string[maxStage+10];
+		if (Application.isEditor)
+			maxStage = 10;
+		PStorage = new string[maxStage];
         Debug.LogFormat("[<PLACEHOLDER> #{0}]: On this bomb we will go through {1} stages.", _moduleId, maxStage+1);
 		PleaseDoRNGThings();
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void SubmissionMode() {
+		for(int i=0;i<12;i++)
+			StageStorage[i]=0;
+		submission = true;
 	}
 	
 	void PleaseDoRNGThings(){
@@ -212,28 +218,33 @@ public class forget : MonoBehaviour {
 		string[] Temp = new string[10];
 		for(int i=0;i<10;i++)
 			Temp[i] = BNames[i];
-		if(FinalOrder[(Array.IndexOf(FinalOrder,"W")+1)%10]=="K"||FinalOrder[(Array.IndexOf(FinalOrder,"W")+9)%10]=="K")
+		if(FinalOrder[(Array.IndexOf(FinalOrder,"W")+1)%10]=="K"||FinalOrder[(Array.IndexOf(FinalOrder,"W")+9)%10]=="K"){
 			Temp = Temp.Reverse().Select(x => x.ToString()).ToArray();
+			Debug.Log("1 Applied.");
+	}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"R")+5)%10]=="C"){
 			Temp = Temp.Select(x => x.Replace("R", "-")).ToArray();
 			Temp = Temp.Select(x => x.Replace("C", "R")).ToArray();
 			Temp = Temp.Select(x => x.Replace("-", "C")).ToArray();
+			Debug.Log("2 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"G")+5)%10]=="M"){
 			Temp = Temp.Select(x => x.Replace("G", "-")).ToArray();
 			Temp = Temp.Select(x => x.Replace("M", "G")).ToArray();
 			Temp = Temp.Select(x => x.Replace("-", "M")).ToArray();
+			Debug.Log("3 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"B")+5)%10]==""){
 			Temp = Temp.Select(x => x.Replace("B", "-")).ToArray();
 			Temp = Temp.Select(x => x.Replace("Y", "B")).ToArray();
 			Temp = Temp.Select(x => x.Replace("-", "Y")).ToArray();
+			Debug.Log("4 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"O")+2)%10]=="P"||FinalOrder[(Array.IndexOf(FinalOrder,"O")+8)%10]=="P"){
 			Temp = Temp.Select(x => x.Replace(FinalOrder[0], "-")).ToArray();
 			Temp = Temp.Select(x => x.Replace(FinalOrder[9], FinalOrder[0])).ToArray();
 			Temp = Temp.Select(x => x.Replace("-", FinalOrder[9])).ToArray();
-
+			Debug.Log("5 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"R")+1)%10]=="B"||FinalOrder[(Array.IndexOf(FinalOrder,"R")+7)%10]=="B"){
 			string[] shifter = new string[12];
@@ -241,12 +252,13 @@ public class forget : MonoBehaviour {
 			shifter[i+2]=Temp[i];
 		for(int i=0;i<10;i++)
 			Temp[(i+2)%10]=shifter[i+2];
+		Debug.Log("6 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"W")+3)%10]=="K"||FinalOrder[(Array.IndexOf(FinalOrder,"W")+7)%10]=="K"){
 			Temp = Temp.Select(x => x.Replace(FinalOrder[1], "-")).ToArray();
 			Temp = Temp.Select(x => x.Replace(FinalOrder[8], FinalOrder[1])).ToArray();
 			Temp = Temp.Select(x => x.Replace("-", FinalOrder[8])).ToArray();
-
+		Debug.Log("7 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"Y")+1)%10]=="G"||FinalOrder[(Array.IndexOf(FinalOrder,"Y")+9)%10]=="G"){
 			string[] shifotr = new string[13];
@@ -254,6 +266,7 @@ public class forget : MonoBehaviour {
 			shifotr[i+3]=Temp[i];
 		for(int i=0;i<10;i++)
 			Temp[(i+7)%10]=shifotr[i+3];
+		Debug.Log("8 Applied.");
 		}
 		for(int i=0;i<10;i++){
 		FinalOrder[i] = Temp[i];
@@ -417,7 +430,10 @@ public class forget : MonoBehaviour {
 				{
 			       Audio.PlaySoundAtTransform("Stage_Generated", Buttons[2].transform);
 					Stage++;
+					if(Stage!=maxStage)
 					PleaseDoRNGThings();
+					else
+					SubmissionMode();
 					yield break;
 				}
 
