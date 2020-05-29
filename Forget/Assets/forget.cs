@@ -77,7 +77,6 @@ public class forget : MonoBehaviour {
 	private string[] ignoredModules = {"OmegaForget","14"," Bamboozling Time Keeper"," Brainf---"," Forget Enigma"," Forget Everything"," Forget It Not"," Forget Me Not"," Forget Me Later"," Forget Perspective"," Forget The Colors"," Forget Them All"," Forget This"," Forget Us Not"," Iconic"," Organization"," Purgatory"," RPS Judging"," Simon Forgets"," Simon's Stages"," Souvenir"," Tallordered Keys"," The Time Keeper"," The Troll"," The Twin"," The Very Annoying Button"," Timing Is Everything"," Turn The Key"," Ultimate Custom Night","Übermodule"};
 	private string Base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private string Base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ``````````````````````````0123456789+-";
-	private string[] _ignore;
     static private int _moduleIdCounter = 1;
 	private int _moduleId;
 	
@@ -86,11 +85,10 @@ public class forget : MonoBehaviour {
 	void Awake()
     {
 		_moduleId = _moduleIdCounter++;
-	    string[] ignore = Boss.GetIgnoredModules(Module, _ignore);
-		if (ignore != null)
-            _ignore = ignore;
-		else
-			_ignore = ignoredModules;
+	    string[] ingore = Boss.GetIgnoredModules(Module, ignoredModules);
+        if (ingore != null)
+            ignoredModules = ingore;
+
 		for (byte i = 0; i < Buttons.Length; i++)
         {
             KMSelectable btn = Buttons[i];
@@ -104,7 +102,7 @@ public class forget : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (!Application.isEditor)
-            maxStage = Bomb.GetSolvableModuleNames().Where(a => !_ignore.Contains(a)).Count();
+            maxStage = Bomb.GetSolvableModuleNames().Where(a => !ignoredModules.Contains(a)).Count();
 		else
 	 //I WOULD LIKE TO MODIFY THE STAGE COUNT IN THE TESTHARNESS
 			maxStage = 10;
