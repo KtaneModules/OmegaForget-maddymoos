@@ -123,6 +123,7 @@ public class forget : MonoBehaviour {
 	void HandlePress(KMSelectable btn){
 		int aly = Array.IndexOf(Buttons,btn);
 		Buttons[aly].AddInteractionPunch();
+        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Buttons[aly].transform);
 
 		if(solved||Checking){
 			return;
@@ -136,11 +137,18 @@ public class forget : MonoBehaviour {
 		if(SubSegment*10+Inputnum == maxStage){
 			Checking=true;
 			StartCoroutine(FinalCheck());
+			Numbers[0].text = "~~";
 		}
 		else if(Inputnum == 10){
 			Checking=true;
 			StartCoroutine(Check());
 			Inputnum=0;
+			Numbers[0].text = "~~";
+		}
+		else{
+			Numbers[0].text = Mod(SubSegment*10+Inputnum,100).ToString();
+			if (Numbers[0].text.Length == 1)
+				Numbers[0].text = "-"+Numbers[0].text;
 		}
 		}
 	// Update is called once per frame
