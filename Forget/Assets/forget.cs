@@ -601,7 +601,7 @@ public class forget : MonoBehaviour {
 				Orbs[8].localPosition = new Vector3(  .4f,0f, -.4f);
 				Orbs[0].localEulerAngles = new Vector3(0,0,0);
 				}
-				if (Stage < Bomb.GetSolvedModuleNames().Where(a => !_ignore.Contains(a)).Count() && !solved)
+				if (Stage < Bomb.GetSolvedModuleNames().Where(a => !ignoredModules.Contains(a)).Count() && !solved)
 				{
 			       Audio.PlaySoundAtTransform("Stage_Generated", Buttons[2].transform);
 					Stage++;
