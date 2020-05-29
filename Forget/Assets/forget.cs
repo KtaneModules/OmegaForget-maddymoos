@@ -390,16 +390,16 @@ public class forget : MonoBehaviour {
 			else aaaaa[i] = true;
 			BCChanger[i].material = BColours[3]; 
 		}
-		yield return new WaitForSeconds(.5f);
+		yield return new WaitForSeconds(.8f);
 		for(int i=0;i<Inputnum;i++){
 			if (!aaaaa[i]){
 				E = false;
-				yield return new WaitForSeconds(.25f);
+				yield return new WaitForSeconds(.2f);
 			Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
 			BCChanger[i].material = BColours[7]; 
 			}
 		}
-		yield return new WaitForSeconds(.25f);
+		yield return new WaitForSeconds(1f);
 		if(E){
 			StartCoroutine(SolveAnimation());
 		}
@@ -430,16 +430,16 @@ public class forget : MonoBehaviour {
 			else aaaaa[i] = true;
 			BCChanger[i].material = BColours[3]; 
 		}
-		yield return new WaitForSeconds(.5f);
+		yield return new WaitForSeconds(.8f);
 		for(int i=0;i<10;i++){
 			if (!aaaaa[i]){
 				E = false;
-				yield return new WaitForSeconds(.25f);
+				yield return new WaitForSeconds(.2f);
 			Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
 			BCChanger[i].material = BColours[7]; 
 			}
 		}
-		yield return new WaitForSeconds(.25f);
+		yield return new WaitForSeconds(1f);
 		if(E){
 			Audio.PlaySoundAtTransform("Ten_Stages_Passed", Numbers[0].transform);
 			SubSegment++;
