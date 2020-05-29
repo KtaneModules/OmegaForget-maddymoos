@@ -74,7 +74,7 @@ public class forget : MonoBehaviour {
 	private bool intro;
 	private bool submission = false;
 	private bool Checking = false;
-	private string[] IgnoreList = {"OmegaForget","14"," Bamboozling Time Keeper"," Brainf---"," Forget Enigma"," Forget Everything"," Forget It Not"," Forget Me Not"," Forget Me Later"," Forget Perspective"," Forget The Colors"," Forget Them All"," Forget This"," Forget Us Not"," Iconic"," Organization"," Purgatory"," RPS Judging"," Simon Forgets"," Simon's Stages"," Souvenir"," Tallordered Keys"," The Time Keeper"," The Troll"," The Twin"," The Very Annoying Button"," Timing Is Everything"," Turn The Key"," Ultimate Custom Night","Übermodule"};
+	private string[] ignoredModules = {"OmegaForget","14"," Bamboozling Time Keeper"," Brainf---"," Forget Enigma"," Forget Everything"," Forget It Not"," Forget Me Not"," Forget Me Later"," Forget Perspective"," Forget The Colors"," Forget Them All"," Forget This"," Forget Us Not"," Iconic"," Organization"," Purgatory"," RPS Judging"," Simon Forgets"," Simon's Stages"," Souvenir"," Tallordered Keys"," The Time Keeper"," The Troll"," The Twin"," The Very Annoying Button"," Timing Is Everything"," Turn The Key"," Ultimate Custom Night","Übermodule"};
 	private string Base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private string Base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ``````````````````````````0123456789+-";
 	private string[] _ignore;
@@ -83,7 +83,8 @@ public class forget : MonoBehaviour {
 	
 	private int[] StageStorage = new int [100];
 	
-	void Awake() {
+	void Awake()
+    {
 		_moduleId = _moduleIdCounter++;
 	    string[] ignoredModules = Boss.GetIgnoredModules(Module, _ignore);
 		if (ignoredModules != null)
