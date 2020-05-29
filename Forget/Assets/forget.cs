@@ -86,9 +86,11 @@ public class forget : MonoBehaviour {
 	void Awake()
     {
 		_moduleId = _moduleIdCounter++;
-	    string[] ignoredModules = Boss.GetIgnoredModules(Module, _ignore);
-		if (ignoredModules != null)
-            _ignore = ignoredModules;
+	    string[] ignore = Boss.GetIgnoredModules(Module, _ignore);
+		if (ignore != null)
+            _ignore = ignore;
+		else
+			_ignore = ignoredModules;
 		for (byte i = 0; i < Buttons.Length; i++)
         {
             KMSelectable btn = Buttons[i];

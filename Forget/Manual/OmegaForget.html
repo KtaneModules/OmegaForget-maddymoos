@@ -9,6 +9,14 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/font.css">
     <script src="js/ktane-utils.js"></script>
+	<style>
+	table {
+		border: none;
+	}
+	.corner {
+		border: none;
+	}
+	</style>
 </head>
 <body>
     <div id="ManualContent">
@@ -19,14 +27,305 @@
                     <span class="page-header-section-title">OmegaForget</span>
                 </div>
                 <div class="page-content">
-                    <img src="img/Prefab.svg" class="diagram">
+                    <img src="img/Prefab (2).svg" class="diagram">
                     <h2>On the Subject of OmegaForget</h2>
                     <p class="flavour-text">How is one supposed to complete so much math?</p>
 
                     <p>This module consists of a flat cube, two colored LEDs, a two-digit display, a four-digit stage counter, and ten hexagonal buttons.</p>
-   
+					<p>Initially, the top display will show a two digit base36 number, the two LEDs will each show one of fourteen different colors, and the cube will rotate in a sequence of three. This sequence repeats after a short pause. Each of these will be used for a final calculation to submit later.</p>
+					<p>Upon a module being solved,* the stage counter will increase by 1, the LED colors and two-digit display will change, and the cube will rotate in a different sequence.</p>
+					<p><i>*This module ignores most bosses and time-dependent modules.</i></p>
+					<p><b>If an operator at any point yields a value greater than 999 or less than -999, add or subtract 1000 until it is within that range.</b></p>
+					<h3><b>Section 1: Determining Initial Values</b></h3>
+					<p>To determine the initial value for the current stage, convert the base36 number at the top display to octal, use it as decimal and modulo 1000. This number will be referred to later as I.</p>
+					<h3><b>Section 2: Calculating LED Values</b></h3>
+					<p><b><u>Subsection 2.1: Initial Values</u></b></p>
+					<p>Use the table below to find the initial value of the two LEDs at the top of the module.In the table, use the left LED’s color for the column and the right LED’s color for the row to find your initial LED value, C.</p>
+				</div>
+                <div class="page-footer relative-footer">Page 1 of x</div>
+            </div>
+			<div class="page page-bg-03">
+                <div class="page-header">
+                    <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                    <span class="page-header-section-title">OmegaForget</span>
                 </div>
-                <div class="page-footer relative-footer">Page 3 of 3</div>
+                <div class="page-content">
+					<table class="table">
+						<tr>
+					<p>BK is black, and RS is rose.</p>
+							<th class = "corner"></th>
+							<th>A</th>
+							<th>BK</th>
+							<th>B</th>
+							<th>C</th>
+							<th>G</th>
+							<th>J</th>
+							<th>L</th>
+							<th>M</th>
+							<th>O</th>
+							<th>R</th>
+							<th>RS</th>
+							<th>V</th>
+							<th>W</th>
+							<th>Y</th>
+						</tr>
+						<tr>
+							<td><b>A</b></td>
+							<td>37</td>
+							<td>18</td>
+							<td>07</td>
+							<td>58</td>
+							<td>24</td>
+							<td>72</td>
+							<td>95</td>
+							<td>01</td>
+							<td>54</td>
+							<td>73</td>
+							<td>88</td>
+							<td>13</td>
+							<td>64</td>
+							<td>83</td>
+						</tr>
+						<tr>
+							<td><b>BK</b></td>
+							<td>66</td>
+							<td>48</td>
+							<td>50</td>
+							<td>19</td>
+							<td>41</td>
+							<td>22</td>
+							<td>84</td>
+							<td>78</td>
+							<td>90</td>
+							<td>34</td>
+							<td>03</td>
+							<td>63</td>
+							<td>29</td>
+							<td>14</td>
+						</tr>
+						<tr>
+							<td><b>B</b></td>
+							<td>95</td>
+							<td>23</td>
+							<td>57</td>
+							<td>98</td>
+							<td>36</td>
+							<td>75</td>
+							<td>81</td>
+							<td>42</td>
+							<td>04</td>
+							<td>32</td>
+							<td>07</td>
+							<td>91</td>
+							<td>60</td>
+							<td>11</td>
+						</tr>
+						<tr>
+							<td><b>C</b></td>
+							<td>47</td>
+							<td>86</td>
+							<td>73</td>
+							<td>00</td>
+							<td>16</td>
+							<td>46</td>
+							<td>97</td>
+							<td>59</td>
+							<td>26</td>
+							<td>81</td>
+							<td>77</td>
+							<td>39</td>
+							<td>65</td>
+							<td>92</td>
+						</tr>
+						<tr>
+							<td><b>G</b></td>
+							<td>70</td>
+							<td>24</td>
+							<td>53</td>
+							<td>30</td>
+							<td>27</td>
+							<td>06</td>
+							<td>85</td>
+							<td>44</td>
+							<td>69</td>
+							<td>38</td>
+							<td>76</td>
+							<td>49</td>
+							<td>62</td>
+							<td>99</td>
+						</tr>
+						<tr>
+							<td><b>J</b></td>
+							<td>28</td>
+							<td>63</td>
+							<td>14</td>
+							<td>52</td>
+							<td>90</td>
+							<td>15</td>
+							<td>02</td>
+							<td>87</td>
+							<td>29</td>
+							<td>71</td>
+							<td>45</td>
+							<td>51</td>
+							<td>94</td>
+							<td>37</td>
+						</tr>
+						<tr>
+							<td><b>L</b></td>
+							<td>08</td>
+							<td>33</td>
+							<td>61</td>
+							<td>20</td>
+							<td>22</td>
+							<td>34</td>
+							<td>11</td>
+							<td>89</td>
+							<td>65</td>
+							<td>12</td>
+							<td>67</td>
+							<td>04</td>
+							<td>78</td>
+							<td>91</td>
+						</tr>
+						<tr>
+							<td><b>M</b></td>
+							<td>40</td>
+							<td>82</td>
+							<td>98</td>
+							<td>25</td>
+							<td>95</td>
+							<td>10</td>
+							<td>56</td>
+							<td>69</td>
+							<td>44</td>
+							<td>79</td>
+							<td>96</td>
+							<td>09</td>
+							<td>40</td>
+							<td>31</td>
+						</tr>
+						<tr>
+							<td><b>O</b></td>
+							<td>47</td>
+							<td>03</td>
+							<td>66</td>
+							<td>93</td>
+							<td>35</td>
+							<td>85</td>
+							<td>43</td>
+							<td>91</td>
+							<td>18</td>
+							<td>55</td>
+							<td>78</td>
+							<td>14</td>
+							<td>05</td>
+							<td>60</td>
+						</tr>
+						<tr>
+							<td><b>R</b></td>
+							<td>74</td>
+							<td>95</td>
+							<td>21</td>
+							<td>68</td>
+							<td>02</td>
+							<td>26</td>
+							<td>90</td>
+							<td>42</td>
+							<td>17</td>
+							<td>13</td>
+							<td>80</td>
+							<td>75</td>
+							<td>99</td>
+							<td>53</td>
+						</tr>
+						<tr>
+							<td><b>RS</b></td>
+							<td>32</td>
+							<td>17</td>
+							<td>56</td>
+							<td>74</td>
+							<td>91</td>
+							<td>58</td>
+							<td>70</td>
+							<td>92</td>
+							<td>85</td>
+							<td>30</td>
+							<td>64</td>
+							<td>72</td>
+							<td>89</td>
+							<td>13</td>
+						</tr>
+						<tr>
+							<td><b>V</b></td>
+							<td>41</td>
+							<td>93</td>
+							<td>35</td>
+							<td>88</td>
+							<td>11</td>
+							<td>01</td>
+							<td>23</td>
+							<td>65</td>
+							<td>49</td>
+							<td>00</td>
+							<td>43</td>
+							<td>63</td>
+							<td>87</td>
+							<td>12</td>
+						</tr>
+						<tr>
+							<td><b>W</b></td>
+							<td>34</td>
+							<td>71</td>
+							<td>50</td>
+							<td>06</td>
+							<td>39</td>
+							<td>27</td>
+							<td>33</td>
+							<td>92</td>
+							<td>03</td>
+							<td>52</td>
+							<td>77</td>
+							<td>77</td>
+							<td>49</td>
+							<td>10</td>
+						</tr>
+						<tr>
+							<td><b>Y</b></td>
+							<td>47</td>
+							<td>18</td>
+							<td>94</td>
+							<td>83</td>
+							<td>62</td>
+							<td>14</td>
+							<td>86</td>
+							<td>09</td>
+							<td>54</td>
+							<td>17</td>
+							<td>89</td>
+							<td>24</td>
+							<td>16</td>
+							<td>08</td>
+						</tr>
+						</table>
+						</br>
+						<p><b><u>Subsection 2.2: Final LED Values</b></u></p>
+						<p>Depending on the stage number, modulo 5, perform an operation with value C to get your final LED value, E. (modulo 100 after completing operations.)</p>
+						<p>Stage 0: I-C</p>
+						<p>Stage 1: 2C+7</p>
+						<p>Stage 2: ((C+Cmod2)+(I+Imod2))/2</p>
+						<p>Stage 3: 3I-2C-42</p>
+						<p>Stage 4: 75-C+2(I-C)</p>
+				</div>
+                <div class="page-footer relative-footer">Page 2 of x</div>
+				</div>
+				<div class="page page-bg-02">
+                <div class="page-header">
+                    <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                    <span class="page-header-section-title">OmegaForget</span>
+                </div>
+                <div class="page-content">
+                <div class="page-footer relative-footer">Page 3 of x</div>
             </div>
         </div>
     </div>
