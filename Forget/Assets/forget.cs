@@ -646,81 +646,81 @@ public class forget : MonoBehaviour {
 			ColorChanger[0].material = Lights[13];
 			Lightarray[1].color = Colors[0];
 			ColorChanger[1].material = Lights[0];
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.17f);
 			
 			for(int i=1;i<13;i++){
 			Lightarray[0].color = Colors[13-i];
 			ColorChanger[0].material = Lights[13-i];
 			Lightarray[1].color = Colors[i];
 			ColorChanger[1].material = Lights[i];
-			yield return new WaitForSeconds(.3f);
+			yield return new WaitForSeconds(.2925f);
 			}
 			
 			ColorChanger[0].material = Lights[1];
 			Lightarray[1].color = Colors[13];
 			Lightarray[0].color = Colors[1];
 			ColorChanger[1].material = Lights[13];
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.17f);
 			
 			for(int i=0;i<4;i++){
 			Lightarray[0].color = Colors[13-i];
 			ColorChanger[0].material = Lights[13-i];
 			Lightarray[1].color = Colors[i];
 			ColorChanger[1].material = Lights[i];
-			yield return new WaitForSeconds(.3f);
+			yield return new WaitForSeconds(.2925f);
 			}
 			
 			ColorChanger[0].material = Lights[10];
 			Lightarray[0].color = Colors[10];
 			Lightarray[1].color = Colors[4];
 			ColorChanger[1].material = Lights[4];
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.17f);
 			
 			for(int i=5;i<9;i++){
 			Lightarray[0].color = Colors[13-i];
 			ColorChanger[0].material = Lights[13-i];
 			Lightarray[1].color = Colors[i];
 			ColorChanger[1].material = Lights[i];
-			yield return new WaitForSeconds(.3f);
+			yield return new WaitForSeconds(.2925f);
 			}
 			ColorChanger[0].material = Lights[5];
 			Lightarray[0].color = Colors[5];
 			Lightarray[1].color = Colors[9];
 			ColorChanger[1].material = Lights[9];
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.17f);
 			
 			for(int i=6;i<14;i++){
 			Lightarray[0].color = Colors[13-i];
 			ColorChanger[0].material = Lights[13-i];
 			Lightarray[1].color = Colors[i];
 			ColorChanger[1].material = Lights[i];
-			yield return new WaitForSeconds(.3f);
+			yield return new WaitForSeconds(.2925f);
 			}
 			for(int i=0;i<5;i++){
 			Lightarray[0].color = Colors[13-i];
 			ColorChanger[0].material = Lights[13-i];
 			Lightarray[1].color = Colors[i];
 			ColorChanger[1].material = Lights[i];
-			yield return new WaitForSeconds(.3f);
+			yield return new WaitForSeconds(.2925f);
 			}
 			ColorChanger[0].material = Lights[9];
 			Lightarray[0].color = Colors[9];
 			Lightarray[1].color = Colors[5];
 			ColorChanger[1].material = Lights[5];
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.17f);
 			
 			for(int i=6;i<11;i++){
 			Lightarray[0].color = Colors[13-i];
 			ColorChanger[0].material = Lights[13-i];
 			Lightarray[1].color = Colors[i];
 			ColorChanger[1].material = Lights[i];
-			yield return new WaitForSeconds(.3f);
+			yield return new WaitForSeconds(.2925f);
 			}
 			ColorChanger[0].material = Lights[3];
 			Lightarray[0].color = Colors[3];
 			Lightarray[1].color = Colors[11];
 			ColorChanger[1].material = Lights[11];
-			yield return new WaitForSeconds(1.2f);
+			yield return new WaitForSeconds(1.17f);
 		}
 	#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} press X# (Waits for the color X to be in the #th position, then presses it) ||Commands can be chained using X# X#...||";
