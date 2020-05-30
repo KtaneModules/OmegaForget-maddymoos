@@ -415,6 +415,16 @@ Prefab:
       propertyPath: ModuleType
       value: omegaforget
       objectReference: {fileID: 0}
+    - target: {fileID: 23050301631935510, guid: b69e7e928374ecb45baa107e61fffc77,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b00ae29e61771214fb36d2bf4d9aadbb, type: 2}
+    - target: {fileID: 23056772830117808, guid: b69e7e928374ecb45baa107e61fffc77,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e2d1d19f2a4b0b8478dee7d77f035d61, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b69e7e928374ecb45baa107e61fffc77, type: 2}
   m_IsPrefabParent: 0

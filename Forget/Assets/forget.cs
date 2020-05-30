@@ -217,7 +217,7 @@ public class forget : MonoBehaviour {
 					case 4: X=(X-Mod(X,2))/2+D; break;
 					case 5: X=999-2*X; break;
 				}
-				X=Mod(X,1000);
+				X=X%1000;
 				J[n-1] = X;
 			}
 			else if((Stage%5)==1){
@@ -229,7 +229,7 @@ public class forget : MonoBehaviour {
 					case 4: X=2*D-X+J[n-1]; break;
 					case 5: X=J[2]-X; break;
 				}
-				X=Mod(X,1000);
+				X=X%1000;
 				K[n-1] = X;
 			}
 			else if((Stage%5)==2){
@@ -241,7 +241,7 @@ public class forget : MonoBehaviour {
 					case 4: X=3*D-K[n-1]+X; break;
 					case 5: X=J[2]+K[2]-X; break;
 				}
-				X=Mod(X,1000);
+				X=X%1000;
 				L[n-1] = X;
 			}
 			else if((Stage%5)==3){
@@ -253,7 +253,7 @@ public class forget : MonoBehaviour {
 					case 4: X=n-L[2]-X+D; break;
 					case 5: X=n*(X+E-D); break;
 				}
-				X=Mod(X,1000);
+				X=X%1000;
 				M[n-1] = X;
 			}
 			else if((Stage%5)==4){
@@ -265,7 +265,7 @@ public class forget : MonoBehaviour {
 					case 4: X=5*X-10*n+3*D-E; break;
 					case 5: X=333-L[1]+X-E; break;
 				}
-				X=Mod(X,1000);
+				X=X%1000;
 				N[n-1] = X;
 			}
 		Debug.LogFormat("[OmegaForget #{0}]: X is now {1}.", _moduleId, X);
