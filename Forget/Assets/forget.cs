@@ -727,16 +727,28 @@ public class forget : MonoBehaviour {
 	#pragma warning restore 414
 	 IEnumerator ProcessTwitchCommand(string command)
     {
+		bool Valid = true;
 	     Match m;
         if ((m = Regex.Match(command, @"^\s*press\s+(?:(.)(\d)\s*)+$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
         {
+			 for (var i = 0; i < m.Groups[1].Captures.Count; i++)
+            {
+                var letter = m.Groups[1].Captures[i].Value;
+                var number = m.Groups[2].Captures[i].Value[0] - '0';
+				
+				if(Array.IndexOf(BNames,letter)==-1)
+					Valid = false;
+            }
+			if(!Valid){
+				yield return "sendtochaterror Incorrect Syntax. Valid colors are K,B,C,G,M,O,P,R,W, and Y";
+			}
             yield return null;  // acknowledge to TP that the command was valid
 
             for (var i = 0; i < m.Groups[1].Captures.Count; i++)
             {
                 var letter = m.Groups[1].Captures[i].Value;
                 var number = m.Groups[2].Captures[i].Value[0] - '0';
-
+				
                 while (Checking)
                     yield return "trycancel";
                 while (Array.IndexOf(BCTrack, Array.IndexOf(BNames, letter)) != number)
