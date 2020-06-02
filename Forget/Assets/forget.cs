@@ -107,17 +107,18 @@ public class forget : MonoBehaviour {
 	 //I WOULD LIKE TO MODIFY THE STAGE COUNT IN THE TESTHARNESS
 			maxStage = 1;
 		if(maxStage == 0){
-			Module.HandlePass();
+        Debug.LogFormat("[OmegaForget #{0}]: No avalible modules. Autosolving.", _moduleId,);
 			ColorChanger[0].material = Lights[4];
 			ColorChanger[1].material = Lights[4];
 			Lightarray[0].color = Colors[4];
 			Lightarray[1].color = Colors[4];
 			solved = true;
+			Module.HandlePass();
 		}
 		else{
 		PStorage = new string[maxStage];
 		AStorage = new string[maxStage];
-        Debug.LogFormat("[OmegaForget #{0}]: On this bomb we will go through {1} stages.", _moduleId, maxStage+1);
+        Debug.LogFormat("[OmegaForget #{0}]: On this bomb we will go through {1} stages.", _moduleId, maxStage);
 		PleaseDoRNGThings();
 		}
 	}
@@ -305,9 +306,11 @@ public class forget : MonoBehaviour {
 			Debug.Log("4 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"O")+2)%10]=="P"||FinalOrder[(Array.IndexOf(FinalOrder,"O")+8)%10]=="P"){
-			Temp = Temp.Select(x => x.Replace(FinalOrder[0], "-")).ToArray();
-			Temp = Temp.Select(x => x.Replace(FinalOrder[9], FinalOrder[0])).ToArray();
-			Temp = Temp.Select(x => x.Replace("-", FinalOrder[9])).ToArray();
+			string Aa = FinalOrder[0];
+			string Bb = FinalOrder[9];
+			Temp = Temp.Select(x => x.Replace(Aa, "-")).ToArray();
+			Temp = Temp.Select(x => x.Replace(Bb, Aa)).ToArray();
+			Temp = Temp.Select(x => x.Replace("-", Bb)).ToArray();
 			Debug.Log("5 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"R")+1)%10]=="B"||FinalOrder[(Array.IndexOf(FinalOrder,"R")+9)%10]=="B"){
@@ -319,9 +322,11 @@ public class forget : MonoBehaviour {
 		Debug.Log("6 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"W")+3)%10]=="K"||FinalOrder[(Array.IndexOf(FinalOrder,"W")+7)%10]=="K"){
-			Temp = Temp.Select(x => x.Replace(FinalOrder[1], "-")).ToArray();
-			Temp = Temp.Select(x => x.Replace(FinalOrder[8], FinalOrder[1])).ToArray();
-			Temp = Temp.Select(x => x.Replace("-", FinalOrder[8])).ToArray();
+			string Aa = FinalOrder[1];
+			string Bb = FinalOrder[8];
+			Temp = Temp.Select(x => x.Replace(Aa, "-")).ToArray();
+			Temp = Temp.Select(x => x.Replace(Bb, Aa)).ToArray();
+			Temp = Temp.Select(x => x.Replace("-", Bb)).ToArray();
 		Debug.Log("7 Applied.");
 		}
 		if(FinalOrder[(Array.IndexOf(FinalOrder,"Y")+1)%10]=="G"||FinalOrder[(Array.IndexOf(FinalOrder,"Y")+9)%10]=="G"){
