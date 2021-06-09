@@ -35,6 +35,7 @@ public class forget : MonoBehaviour {
     public Color[] Colors;
     bool GoodOne;
     bool StopTheMusic;
+    bool FlashOrNot;
     private int[] TempGarbage = new int[100];
     private int[] J = new int[4];
     private int[] K = new int[4];
@@ -57,7 +58,7 @@ public class forget : MonoBehaviour {
     new int[14]{74,95,21,68,02,26,90,42,17,13,80,75,99,53},
     new int[14]{32,17,56,74,91,58,70,92,85,30,64,72,89,13},
     new int[14]{41,93,35,88,11,01,23,65,49,00,43,63,87,12},
-    new int[14]{34,71,50,06,39,27,33,92,03,52,77,71,49,10},
+    new int[14]{34,71,50,06,39,27,33,92,03,52,77,77,49,10},
     new int[14]{47,18,94,83,62,14,86,09,54,17,89,24,16,08},
     };
     static readonly private int[][] ButtonTable = new int[10][]{
@@ -85,6 +86,8 @@ public class forget : MonoBehaviour {
     private string Base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ``````````````````````````0123456789+-";
     static private int _moduleIdCounter = 1;
     private int _moduleId;
+    bool CruelActivation;
+    bool MistakesWereMade;
 
     private int[] StageStorage = new int[100];
 
@@ -93,6 +96,7 @@ public class forget : MonoBehaviour {
     {
         public bool TRUEOMEGAFORGET = false;
     }
+    bool Autosolving;
 
     void Awake()
     {
@@ -121,7 +125,7 @@ public class forget : MonoBehaviour {
         else
             maxStage = Bomb.GetSolvableModuleNames().Where(a => !ignoredModules.Contains(a)).Count();
         if (maxStage == 0) {
-            Debug.LogFormat("[OmegaForget #{0}]: No avalible modules. Autosolving.", _moduleId);
+            Debug.LogFormat("[OmegaForget #{0}]: No available modules. Autosolving.", _moduleId);
             ColorChanger[0].material = Lights[4];
             ColorChanger[1].material = Lights[4];
             Lightarray[0].color = Colors[4];
@@ -160,7 +164,7 @@ public class forget : MonoBehaviour {
                 StartCoroutine(FinalCheck());
                 Numbers[0].text = "~~";
             }
-            else if (Inputnum == 10)
+            else if (Inputnum == 10 && !Autosolving)
             {
                 Checking = true;
                 StartCoroutine(Check());
@@ -186,14 +190,13 @@ public class forget : MonoBehaviour {
         for (int i = 0; i < 12; i++)
             StageStorage[i] = 0;
         submission = true;
-        Numbers[0].text = "~~";
-        Numbers[1].text = "INPT";
-        ColorChanger[0].material = Lights[1];
-        ColorChanger[1].material = Lights[1];
-        Lightarray[0].color = Colors[1];
-        Lightarray[1].color = Colors[1];
-        Debug.LogFormat("[OmegaForget #{0}]: The full answer is {1}.", _moduleId, PStorage.Join(", "));
-
+            Numbers[0].text = "~~";
+            Numbers[1].text = "INPT";
+            ColorChanger[0].material = Lights[1];
+            ColorChanger[1].material = Lights[1];
+            Lightarray[0].color = Colors[1];
+            Lightarray[1].color = Colors[1];
+            Debug.LogFormat("[OmegaForget #{0}]: The full answer is {1}.", _moduleId, PStorage.Join(", "));
     }
 
     void PleaseDoRNGThings() {
@@ -249,7 +252,7 @@ public class forget : MonoBehaviour {
                         case 1: X = E - I; break;
                         case 2: X = I + 2 * E; break;
                         case 3: Y = 99 - E; X = I - Y; break;
-                        case 4: Y = I % 2; Y = I - Y; X = Y / 2 + D; break;
+                        case 4: Y = I % 2; if (Y == -1) Y = 1; Y = I - Y; X = Y / 2 + D; break;
                         case 5: X = 999 - 2 * I; break;
                     }
                     X = X % 1000;
@@ -276,7 +279,7 @@ public class forget : MonoBehaviour {
                         case 0: X = I - K[1]; break;
                         case 1: Y = I + E; X = D - Y + K[1]; break;
                         case 2: X = I + J[1] + K[1]; break;
-                        case 3: Y = J[1] % 6 + 1; X = I * Y; break;
+                        case 3: Y = J[1] % 6 + 1; if (Y < 1) Y = Y + 6; X = I * Y; break;
                         case 4: X = 3 * D - K[1] + I; break;
                         case 5: X = J[1] + K[1] - I; break;
                     }
@@ -288,9 +291,9 @@ public class forget : MonoBehaviour {
                     switch (StageStorage[n - 1])
                     {
                         case 0: X = 3 * I - 4 * D; break;
-                        case 1: Y = I % 2; Y = I + Y; X = K[1] + Y / 2; break;
+                        case 1: Y = I % 2; if (Y == -1) Y = 1; Y = I + Y; X = K[1] + Y / 2; break;
                         case 2: X = L[1] - K[1] - J[1] + I; break;
-                        case 3: Y = I % 4 + 1; X = L[1] - I * Y; break;
+                        case 3: Y = I % 4 + 1; if (Y < 1) Y = Y + 4; X = L[1] - I * Y; break;
                         case 4: X = (-1) * L[1] - I + D; break;
                         case 5: X = I + E - D; break;
                     }
@@ -304,7 +307,7 @@ public class forget : MonoBehaviour {
                         case 0: X = 999 - 4 * I + M[1]; break;
                         case 1: X = I + K[1] - M[1]; break;
                         case 2: X = X - M[1] + L[1] - K[1] + J[1]; break;
-                        case 3: Y = I % 2; Y = I - Y; X = J[1] + 15 - Y / 2; break;
+                        case 3: Y = I % 2; if (Y == -1) Y = 1; Y = I - Y; X = J[1] + 15 - Y / 2; break;
                         case 4: X = 5 * I - L[1] + 3 * D - E; break;
                         case 5: X = 333 - L[1] + I - E; break;
                     }
@@ -324,7 +327,7 @@ public class forget : MonoBehaviour {
                         case 1: X = E - X; break; //ZX
                         case 2: X = X + 2 * E; break; //XY
                         case 3: Y = 99 - E; X = I - Y + X; break; //YX
-                        case 4: Y = X % 2; Y = X - Y; X = Y / 2 + D; break; //ZY
+                        case 4: Y = X % 2; if (Y == -1) Y = 1; Y = X - Y; X = Y / 2 + D; break; //ZY
                         case 5: X = 999 - 2 * X; break; //YZ
                     }
                     X = X % 1000;
@@ -351,7 +354,7 @@ public class forget : MonoBehaviour {
                         case 0: X = n * X - K[1]; break;
                         case 1: Y = X + E; X = D - Y + K[1]; break;
                         case 2: X = X + J[n] + K[n]; break;
-                        case 3: Y = J[n] % 6 + 1; X = X * Y; break;
+                        case 3: Y = J[n] % 6 + 1; if (Y < 1) Y = Y + 6; X = X * Y; break;
                         case 4: X = 3 * D - K[n] + X; break;
                         case 5: X = J[3] + K[3] - X; break;
                     }
@@ -363,9 +366,9 @@ public class forget : MonoBehaviour {
                     switch (StageStorage[n - 1])
                     {
                         case 0: X = 3 * X - 4 * D + 5 * n; break;
-                        case 1: Y = X % 2; Y = X + Y; X = K[n] + Y / 2; break;
+                        case 1: Y = X % 2; if (Y == -1) Y = 1; Y = X + Y; X = K[n] + Y / 2; break;
                         case 2: X = L[n] - K[n] - J[n] + X; break;
-                        case 3: Y = I % 4 + 1; X = L[2] - X * Y; break;
+                        case 3: Y = I % 4 + 1; if (Y < 1) Y = Y + 4; X = L[2] - X * Y; break;
                         case 4: X = n - L[3] - X + D; break;
                         case 5: Y = X + E - D; X = n * Y; break;
                     }
@@ -379,7 +382,7 @@ public class forget : MonoBehaviour {
                         case 0: X = 999 - 4 * X - 9 * n + M[3]; break;
                         case 1: Y = X - 5 * n;  X = I - 2 * n - K[1] + Y; break;
                         case 2: X = X - M[n] + L[n] - K[n] + J[n]; break;
-                        case 3: Y = X % 2; Y = X - Y; X = J[3] + 15 * n - Y / 2; break;
+                        case 3: Y = X % 2; if (Y == -1) Y = 1;  Y = X - Y; X = J[3] + 15 * n - Y / 2; break;
                         case 4: X = 5 * X - 10 * n + 3 * D - E; break;
                         case 5: X = 333 - L[2] + X - E; break;
                     }
@@ -457,6 +460,58 @@ public class forget : MonoBehaviour {
 
 
     }
+    IEnumerator JesusChristWhy()
+    {
+        CruelActivation = true;
+        yield return new WaitForSeconds(6f);
+        CruelActivation = false;
+        Numbers[1].text = Stage.ToString();
+        while (Numbers[1].text.Length != 4)
+            Numbers[1].text = "-" + Numbers[1].text;
+    }
+    IEnumerator YOUMADEAMISTAKE()
+    {
+        MistakesWereMade = true;
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "--OH";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "SHIT";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "THIS";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "--IS";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "-NOT";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "GOOD";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "--AT";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "-ALL";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "WHAT";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "HAVE";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "-YOU";
+        yield return new WaitForSeconds(0.2f);
+        Audio.PlaySoundAtTransform("Wrong_Answer_Reveal", Numbers[0].transform);
+        Numbers[1].text = "DONE";
+        yield return new WaitForSeconds(0.2f);
+        MistakesWereMade = false;
+        Settings.TRUEOMEGAFORGET = true;
+        PleaseDoRNGThings();
+    }
 	IEnumerator ColorCycleer(){
 		while(true){
             if (intro)
@@ -464,7 +519,8 @@ public class forget : MonoBehaviour {
             else
             {
                 yield return new WaitForSeconds(.5f);
-                CycleHelper++;
+                if (!FlashOrNot)
+                    CycleHelper++;
             }
 			if(!Checking){
 			//todo this is dumb
@@ -489,15 +545,17 @@ public class forget : MonoBehaviour {
                 CycleHelper = 0;
                 for (int i = 0; i < 2; i++)
                 {
-                    if (BCChanger[0].material != BColours[8])
-                        BCChanger[0].material = BColours[8];
-                    else
+                    if (BCChanger[0].material == BColours[8])
                         BCChanger[0].material = BColours[0];
+                    else
+                        BCChanger[0].material = BColours[8];
                     yield return new WaitForSeconds(0.125f);
                     BCChanger[0].material = BColours[BCTrack[0]];
                     yield return new WaitForSeconds(0.125f);
                 }
             }
+            if (MistakesWereMade)
+            yield break;
 		}
 	}
 	IEnumerator SolveAnimation(){
@@ -531,7 +589,10 @@ public class forget : MonoBehaviour {
 		bool[] aaaaa = {false,false,false,false,false,false,false,false,false,false};
 		bool E = true;
 		for(int i=0;i<10;i++)
-			BCChanger[i].material = BColours[0]; 
+			BCChanger[i].material = BColours[0];
+        if (Autosolving)
+            while (Inputnum > 10)
+                Inputnum = Inputnum - 10;
 		for(int i=0;i<Inputnum;i++){
 			if (PStorage[SubSegment*10+i] != AStorage[SubSegment*10+i])
 				aaaaa[i] = false;
@@ -549,6 +610,7 @@ public class forget : MonoBehaviour {
 		}
 		yield return new WaitForSeconds(0.2f);
 		if(E){
+            FlashOrNot = true;
             if (Settings.TRUEOMEGAFORGET)
             {
                 Audio.PlaySoundAtTransform("Ten_Stages_Passed", Numbers[0].transform);
@@ -569,11 +631,11 @@ public class forget : MonoBehaviour {
             else
             {
                 GoodOne = true;
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.1f);
                 Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1, 4), Numbers[0].transform);
                 Numbers[1].text = "-YOU";
                 ColorChanger[0].material = Lights[4];
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(1.2f);
                 Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1, 4), Numbers[0].transform);
                 Numbers[1].text = "-WIN";
                 ColorChanger[1].material = Lights[4];
@@ -606,6 +668,7 @@ public class forget : MonoBehaviour {
 		else{
             yield return new WaitForSeconds(1.3f);
 			Audio.PlaySoundAtTransform("Wrong_Answer_End", Numbers[0].transform);
+            Debug.LogFormat("[OmegaForget #{0}]: Final set of inputs had at least one incorrect press. Try again.", _moduleId);
 			ColorChanger[0].material = Lights[9];
 			ColorChanger[1].material = Lights[9];
 			Lightarray[0].color = Colors[9];
@@ -642,6 +705,7 @@ public class forget : MonoBehaviour {
 		}
 		yield return new WaitForSeconds(0.2f);
 		if(E){
+            FlashOrNot = true;
 			Audio.PlaySoundAtTransform("Ten_Stages_Passed", Numbers[0].transform);
             Debug.LogFormat("[OmegaForget #{0}]: This set of inputs was correct! Moving on to the next set.", _moduleId);
             GoodOne = true;
@@ -820,16 +884,18 @@ public class forget : MonoBehaviour {
                 if (!Settings.TRUEOMEGAFORGET)
                     i = 3;
 				}
-				if (Stage < Bomb.GetSolvedModuleNames().Where(a => !ignoredModules.Contains(a)).Count() && !solved)
-				{
-			       Audio.PlaySoundAtTransform("Stage_Generated", Buttons[2].transform);
-					Stage++;
-					if(Stage!=maxStage)
-					PleaseDoRNGThings();
-					else
-					SubmissionMode();
-					yield break;
-				}
+            if (MistakesWereMade)
+                yield break;
+            else if (Stage < Bomb.GetSolvedModuleNames().Where(a => !ignoredModules.Contains(a)).Count() && !solved)
+                {
+                Audio.PlaySoundAtTransform("Stage_Generated", Buttons[2].transform);
+                Stage++;
+                if (Stage != maxStage)
+                    PleaseDoRNGThings();
+                else
+                    SubmissionMode();
+                yield break;
+            }
 
 			}
 
@@ -954,6 +1020,7 @@ public class forget : MonoBehaviour {
     {
 		bool Valid = true;
 	     Match m;
+        string[] WhatHaveYouDone = command.Split(' ');
         if ((m = Regex.Match(command, @"^\s*press\s+(?:(.)(\d)\s*)+$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
         {
 			 for (var i = 0; i < m.Groups[1].Captures.Count; i++)
@@ -989,11 +1056,33 @@ public class forget : MonoBehaviour {
                 yield return new WaitForSeconds(.1f);
             }
         }
+        else if (Regex.IsMatch(WhatHaveYouDone[0], @"^\s*activatecruel\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            if (Stage != 0)
+            {
+                yield return "sendtochaterror You can only activate this on the first stage.";
+            }
+            if (!CruelActivation)
+            {
+                StartCoroutine(JesusChristWhy());
+                Numbers[1].text = "????";
+                yield return "sendtochat For your own sanity, PLEASE do not commit to this...";
+                yield break;
+            }
+            else
+            {
+                StopCoroutine(JesusChristWhy());
+                StartCoroutine(YOUMADEAMISTAKE());
+                yield return "sendtochat Welp, don't say I didn't warn you.";
+                yield break;
+            }
+        }
         else
             yield return "sendtochaterror Incorrect Syntax. Use '!{1} press X#'.";
 	}
 	IEnumerator TwitchHandleForcedSolve()
     {
+        Autosolving = true;
 		while (!submission) //Wait until submission time
             yield return true;
 		string[] m = PStorage;
