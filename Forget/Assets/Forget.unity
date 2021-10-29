@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -371,48 +371,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8814ea52310d2614a9feda02ec355ae4, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &1834637939
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -0.2044
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4176691328621398, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 1a4ec9a4fa9f6da4aac49fe36aadd7e1, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &1908975693
 Prefab:
   m_ObjectHideFlags: 0
@@ -451,11 +409,6 @@ Prefab:
     - target: {fileID: 4163446309860130, guid: b69e7e928374ecb45baa107e61fffc77, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 82892729156151988, guid: b69e7e928374ecb45baa107e61fffc77,
-        type: 2}
-      propertyPath: spreadCustomCurve.m_RotationOrder
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b69e7e928374ecb45baa107e61fffc77, type: 2}
