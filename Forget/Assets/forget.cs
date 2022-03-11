@@ -47,6 +47,7 @@ public class forget : MonoBehaviour {
     bool GoodOne;
     bool StopTheMusic;
     bool FlashOrNot;
+    bool flashblack;
     private int[] TempGarbage = new int[100];
     private int[] J = new int[4];
     private int[] K = new int[4];
@@ -106,6 +107,7 @@ public class forget : MonoBehaviour {
     sealed class OmegaSettings
     {
         public bool TRUEOMEGAFORGET = false;
+        public bool EveryStageSounds = false;
     }
     bool Autosolving;
 
@@ -464,6 +466,8 @@ public class forget : MonoBehaviour {
     }
 	void ButtonReorder(){
         Debug.LogFormat("[OmegaForget #{0}] The order of the buttons on the module is {1}{2}{3}{4}{5}{6}{7}{8}{9}{10}.", _moduleId, FinalOrder[0], FinalOrder[1], FinalOrder[2], FinalOrder[3], FinalOrder[4], FinalOrder[5], FinalOrder[6], FinalOrder[7], FinalOrder[8], FinalOrder[9]);
+        if (FinalOrder[0] == "W")
+            flashblack = true;
         string[] Temp = new string[10];
 		for(int i=0;i<10;i++)
 			Temp[i] = BNames[i];
@@ -721,7 +725,7 @@ public class forget : MonoBehaviour {
                     CycleHelper = CycleHelper - 30;
                         for (int i = 0; i < 2; i++)
                         {
-                            if (BCChanger[0].material == BColours[8])
+                            if (flashblack)
                                 BCChanger[0].material = BColours[0];
                             else
                                 BCChanger[0].material = BColours[8];
@@ -807,7 +811,6 @@ public class forget : MonoBehaviour {
 			BCChanger[i].material = BColours[7]; 
 			}
 		}
-		yield return new WaitForSeconds(0.2f);
 		if(E){
             FlashOrNot = true;
             if (Settings.TRUEOMEGAFORGET)
@@ -834,11 +837,11 @@ public class forget : MonoBehaviour {
                 Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1, 4), Numbers[0].transform);
                 Numbers[1].text = "-YOU";
                 ColorChanger[0].material = Lights[4];
-                yield return new WaitForSeconds(1.2f);
+                yield return new WaitForSeconds(0.8f);
                 Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1, 4), Numbers[0].transform);
                 Numbers[1].text = "-WIN";
                 ColorChanger[1].material = Lights[4];
-                yield return new WaitForSeconds(0.8f);
+                yield return new WaitForSeconds(0.7f);
                 Audio.PlaySoundAtTransform("End", Numbers[0].transform);
                 Debug.LogFormat("[OmegaForget #{0}]: THAT'S ALL SHE WROTE!", _moduleId);
                 yield return new WaitForSeconds(1.5f);
@@ -865,7 +868,7 @@ public class forget : MonoBehaviour {
             }
         }
 		else{
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(1.5f);
 			Audio.PlaySoundAtTransform("Wrong_Answer_End", Numbers[0].transform);
             Debug.LogFormat("[OmegaForget #{0}]: Final set of inputs had at least one incorrect press. Try again.", _moduleId);
             StartCoroutine(Recovery());
@@ -903,7 +906,6 @@ public class forget : MonoBehaviour {
 			BCChanger[i].material = BColours[7]; 
 			}
 		}
-		yield return new WaitForSeconds(0.2f);
 		if(E){
             Inputnum = 0;
             FlashOrNot = true;
@@ -917,7 +919,7 @@ public class forget : MonoBehaviour {
 			Lightarray[1].color = Colors[4];
 		}
 		else{
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(1.5f);
 			Audio.PlaySoundAtTransform("Wrong_Answer_End", Numbers[0].transform);
             Debug.LogFormat("[OmegaForget #{0}]: Looks like some presses were incorrect. Strike.", _moduleId);
             StartCoroutine(Recovery());
@@ -1007,6 +1009,10 @@ public class forget : MonoBehaviour {
             Debug.LogFormat("[OmegaForget #{0}]: The rotations, in order, for this stage are {1}, {2}, {3}.", _moduleId, Rotations[StageStorage[0]], Rotations[StageStorage[1]], Rotations[StageStorage[2]]);
         else
             Debug.LogFormat("[OmegaForget #{0}]: The rotation this stage is {1}.", _moduleId, Rotations[StageStorage[0]]);
+        if ((Stage != 0)&&(Settings.EveryStageSounds))
+        {
+            Audio.PlaySoundAtTransform("Stage_Generated", Buttons[2].transform);
+        }
 		Debug.LogFormat("[OmegaForget #{0}]: The LED colors are {1} and {2}.", _moduleId,CNames[StageStorage[4]],CNames[StageStorage[5]]);
 		Debug.LogFormat("[OmegaForget #{0}]: In Base 10, the number displayed is {1}.", _moduleId,StageStorage[3]);
 		StageMath();
@@ -1106,7 +1112,6 @@ public class forget : MonoBehaviour {
                 yield break;
             else if (Stage < Bomb.GetSolvedModuleNames().Where(a => !ignoredModules.Contains(a)).Count() && !solved)
                 {
-                Audio.PlaySoundAtTransform("Stage_Generated", Buttons[2].transform);
                 Stage++;
                 if (Stage != maxStage)
                     PleaseDoRNGThings();
