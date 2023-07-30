@@ -21,5 +21,6 @@ MonoBehaviour:
     of the original (the cruel version can be enabled in mod settings), a few general
     modifications, and some bug fixes. Please unsubscribe from the old version.'
   version: 1.0
-  outputFolder: D:\Steam\steamapps\common\Keep Talking and Nobody Explodes\mods
+  outputFolder: C:\Program Files (x86)\Steam\steamapps\common\Keep Talking and Nobody
+    Explodes\mods
   previewImage: {fileID: 2800000, guid: afebac01c3d14fb4287255869868fa4f, type: 3}

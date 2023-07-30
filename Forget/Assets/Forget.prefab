@@ -5098,6 +5098,7 @@ MonoBehaviour:
   Bomb: {fileID: 114467820759207742}
   NerfSolve: {fileID: 82892729156151988}
   NerfSound: {fileID: 8300000, guid: c906a31096bb05a4eaa631903b704600, type: 3}
+  Rare: {fileID: 8300000, guid: 90cf5536ce1df2142a2f0478cc4a2640, type: 3}
   Orbs:
   - {fileID: 4854998974091036}
   - {fileID: 4220260398313906}

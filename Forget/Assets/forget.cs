@@ -14,6 +14,7 @@ public class forget : MonoBehaviour {
     public KMBombInfo Bomb;
     public AudioSource NerfSolve;
     public AudioClip NerfSound;
+    public AudioClip Rare;
     public Transform[] Orbs;
     public TextMesh[] Numbers;
     public TextMesh[] RecoveryNumbers;
@@ -137,7 +138,8 @@ public class forget : MonoBehaviour {
     void Start() {
         if (Application.isEditor)
         {
-            maxStage = 21;
+            maxStage = 10;
+            Settings.TRUEOMEGAFORGET = true;
             StartCoroutine(LiterallyJustForTesting());
         }
         else
@@ -455,13 +457,14 @@ public class forget : MonoBehaviour {
 	}
     IEnumerator LiterallyJustForTesting()
     {
+        yield return new WaitForSeconds(10f);
         while (Stage < (maxStage - 1))
         {
             yield return new WaitForSeconds(1f);
             Stage++;
             PleaseDoRNGThings();
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         SubmissionMode();
     }
 	void ButtonReorder(){
@@ -802,7 +805,7 @@ public class forget : MonoBehaviour {
 			else aaaaa[i] = true;
 			BCChanger[i].material = BColours[3]; 
 		}
-		yield return new WaitForSeconds(0.8f);
+		yield return new WaitForSeconds(0.7f);
 		for(int i=0;i<Inputnum;i++){
 			if (!aaaaa[i]){
 				E = false;
@@ -837,7 +840,7 @@ public class forget : MonoBehaviour {
                 Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1, 4), Numbers[0].transform);
                 Numbers[1].text = "-YOU";
                 ColorChanger[0].material = Lights[4];
-                yield return new WaitForSeconds(0.8f);
+                yield return new WaitForSeconds(0.75f);
                 Audio.PlaySoundAtTransform("Reveal_"+Rnd.Range(1, 4), Numbers[0].transform);
                 Numbers[1].text = "-WIN";
                 ColorChanger[1].material = Lights[4];
@@ -848,7 +851,8 @@ public class forget : MonoBehaviour {
                 for (int i = 0; i < 10; i++)
                     BCChanger[i].material = BColours[3];
                 Module.HandlePass();
-                NerfSolve.clip = NerfSound;
+                if (Rnd.Range(0, 100) == 0) NerfSolve.clip = Rare;
+                else NerfSolve.clip = NerfSound;
                 NerfSolve.Play();
                 StopTheMusic = true;
                 yield return new WaitForSeconds(10f);
@@ -1119,7 +1123,7 @@ public class forget : MonoBehaviour {
                     SubmissionMode();
                 yield break;
             }
-
+            if (Application.isEditor) yield break;
 			}
 
 		}
@@ -1234,6 +1238,21 @@ public class forget : MonoBehaviour {
 			Lightarray[0].color = Colors[3];
 			Lightarray[1].color = Colors[11];
 			ColorChanger[1].material = Lights[11];
+            for(int i=0;i<4;i++)
+            {
+            for (int j=5;j>0;j--)
+            {
+                BCChanger[j - 1].material = BColours[8];
+                BCChanger[j + 4].material = BColours[8];
+                yield return new WaitForSeconds(0.05f);
+            }
+            for (int j=5;j>0;j--)
+            {
+                BCChanger[j - 1].material = BColours[0];
+                BCChanger[j + 4].material = BColours[0];
+                yield return new WaitForSeconds(0.05f);
+            }
+            }
 			yield return new WaitForSeconds(1.17f);
 		}
 	#pragma warning disable 414
@@ -1254,7 +1273,7 @@ public class forget : MonoBehaviour {
 				if(Array.IndexOf(BNames,letter)==-1)
 					Valid = false;
             }
-            if (RecoveryModeActive)
+            if (RecoveryModeActive) //WEEEEE ELSE IF STRING WEEEEEEEEEEEEEEEEEEEE I TOTALLY COULD MAKE THIS BETTER BUT I'M RUNNING ON 2 HOURS OF SLEEP
             {
                 yield return "sendtochaterror Please use '![0] stage #' when in recovery mode!";
                 yield break;
@@ -1264,9 +1283,14 @@ public class forget : MonoBehaviour {
                 yield return "sendtochaterror Incorrect syntax. Valid colors are K,B,C,G,M,O,P,R,W, and Y";
                 yield break;
             }
-            else if (Inputnum + m.Groups[1].Captures.Count > 10 || GoodOne)
+            else if (Inputnum + m.Groups[1].Captures.Count > 10)
             {
-                yield return "sendtochaterror Ignored command to prevent accidental button presses during an animation.";
+                yield return "sendtochaterror That's too many presses! Only press within the current set.";
+                yield break;
+            }
+            else if (GoodOne)
+            {
+                yield return "sendtochaterror Module is currently animating, please try again.";
                 yield break;
             }
                 yield return null;  // acknowledge to TP that the command was valid
@@ -1284,7 +1308,7 @@ public class forget : MonoBehaviour {
                 yield return new WaitForSeconds(.1f);
             }
         }
-        if ((Regex.IsMatch(WhatHaveYouDone[0], @"^\s*stage\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)))
+        else if ((Regex.IsMatch(WhatHaveYouDone[0], @"^\s*stage\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))) //would you believe me if I said this was just an "if" for the longest time?
         {
             string check = "";
             for (int i = 1; i < WhatHaveYouDone.Length; i++)
